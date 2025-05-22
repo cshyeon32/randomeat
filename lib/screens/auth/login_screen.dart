@@ -38,11 +38,7 @@ class _AuthScreenState extends State<LoginScreen> {
             ),
           );
         } else {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => HomeScreen(),
-            ),
-          );
+          Navigator.of(context).pushReplacementNamed('/home');
         }
       }
     }
@@ -60,7 +56,7 @@ class _AuthScreenState extends State<LoginScreen> {
                 alignment: Alignment.center,
                 child: Image.asset(
                   'assets/img/logo2.png',
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.3,
                 ),
               ),
               SizedBox(
@@ -164,11 +160,7 @@ class _AuthScreenState extends State<LoginScreen> {
           ),
         );
       } else {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => HomeScreen(),
-          ),
-        );
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     }
   }

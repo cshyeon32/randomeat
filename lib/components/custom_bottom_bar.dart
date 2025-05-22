@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:random_eat/screens/profile/profile_screen.dart';
 import 'package:random_eat/screens/home/home_screen.dart';
 import 'package:random_eat/screens/list_screen.dart';
-import 'package:random_eat/screens/profile/profile_screen.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomBottomBar extends StatelessWidget {
   final int currentIndex;
 
-  const CustomAppBar({super.key, required this.currentIndex});
+  const CustomBottomBar({super.key, required this.currentIndex});
 
   void _onItemTapped(BuildContext context, int index) {
     if (index == currentIndex) return;

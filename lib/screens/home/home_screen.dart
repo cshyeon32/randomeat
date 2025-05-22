@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:random_eat/models/food_item.dart';
 import 'package:random_eat/services/food_service.dart';
-import 'package:random_eat/components/custom_app_bar.dart';
+import 'package:random_eat/components/custom_bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("랜덤 음식 추천")),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("랜덤 음식 추천"),
+      ),
       body: Column(
         children: [
           const SizedBox(height: 16),
@@ -113,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomAppBar(currentIndex: 1),
+      bottomNavigationBar: const CustomBottomBar(currentIndex: 1),
     );
   }
 }
