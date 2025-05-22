@@ -1,7 +1,9 @@
-import '../components/custom_bottom_bar.dart';
+import 'package:random_eat/components/custom_tab_bar.dart';
+import 'package:random_eat/components/custom_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/food_item.dart';
+import 'dart:io';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({Key? key}) : super(key: key);

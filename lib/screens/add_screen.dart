@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:random_eat/models/food_item.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -20,6 +21,8 @@ class _AddScreenState extends State<AddScreen> {
     '전체',
     '한식',
     '양식',
+    '중식',
+    '일식',
     '기타',
   ];
 
@@ -34,26 +37,25 @@ class _AddScreenState extends State<AddScreen> {
 
   Future<void> _saveFood() async {
     if (_nameController.text.isEmpty || _imageFile == null) return;
-
+    // if (_nameController.text.isEmpty || _imageFile == null || _selectedCategory == '전체') {
+    //   // 전체 선택 시 저장 않함
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text('카테고리를 선택해주세요.')),
+    //   );
+    //   return;
+    // }
     final directory = await getApplicationDocumentsDirectory();
     final fileName = _imageFile!.path.split('/').last;
     final savedImage = await _imageFile!.copy('${directory.path}/$fileName');
-// final dir = await getApplicationDocumentsDirectory();
-// final filename = _imageFile!.path.split('/').last;
-// final saved = await _imageFile!.copy('${dir.path}/$filename');
 
-    final foodBox = await Hive.openBox('foods');
-    await foodBox.add({
-      'name': _nameController.text,
-      'category': _selectedCategory,
-      'imagePath': savedImage.path,
-    });
-    // final box = Hive.box('foods');
-    // await box.add({
-    //   'name': _nameController.text,
-    //   'category': _selectedCategory,
-    //   'imagePath': saved.path,
-    // });
+    final foodBox = await Hive.openBox<FoodItem>('foodBox');
+    final food = FoodItem(
+      name: _nameController.text,
+      imageUrl: savedImage.path,
+      category: _selectedCategory.trim(),
+    );
+
+    await foodBox.add(food);
     Navigator.pop(context); // 홈으로 돌아가기
   }
 
