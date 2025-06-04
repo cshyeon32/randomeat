@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:random_eat/components/custom_tab_bar.dart';
 import 'package:random_eat/models/food_item.dart';
 import 'package:random_eat/services/food_service.dart';
-import 'package:random_eat/components/custom_bottom_bar.dart';
+import 'package:random_eat/components/custom_tab_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,6 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Widget buildImage(String imagePath) {
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+      // URL 이미지
+      return Image.network(imagePath,
+          height: 150, width: 150, fit: BoxFit.cover);
+    } else {
+      // 로컬 파일 이미지
+      return Image.file(File(imagePath),
+          height: 150, width: 150, fit: BoxFit.cover);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_foodService == null || _food == null) {
@@ -92,8 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 24),
           Column(
             children: [
-              Image.network(_food!.imageUrl,
-                  height: 150, width: 150, fit: BoxFit.cover),
+              buildImage(_food!.imageUrl),
               const SizedBox(height: 16),
               Text(
                 _food!.name,

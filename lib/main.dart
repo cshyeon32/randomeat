@@ -10,9 +10,8 @@ import 'package:random_eat/screens/home/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  // await Hive.openBox('foods');
+  // await Hive.openBox('foodBox');
   Hive.registerAdapter(FoodItemAdapter());
-  // await Hive.deleteBoxFromDisk('foodBox'); // 초기화
   final foodBox = await Hive.openBox<FoodItem>('foodBox');
   await seedData(foodBox);
   runApp(const MyApp());

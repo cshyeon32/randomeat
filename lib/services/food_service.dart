@@ -8,7 +8,8 @@ class FoodService {
 
   List<String> getCategories() {
     final foods = _foodBox.values.toList();
-    final categories = foods.map((e) => e.category).toSet().toList();
+    final categories =
+        foods.map((e) => e.category).where((c) => c != '전체').toSet().toList();
     categories.sort();
     return ['전체', ...categories];
   }
