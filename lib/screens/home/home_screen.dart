@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:random_eat/components/custom_tab_bar.dart';
 import 'package:random_eat/models/food_item.dart';
 import 'package:random_eat/services/food_service.dart';
-import 'package:random_eat/components/custom_tab_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,6 +23,17 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _initData();
+    Hive.box<FoodItem>('foodBox').listenable().addListener(() {
+      if (_foodService != null) {
+        final allFoods = Hive.box<FoodItem>('foodBox').values.toList();
+
+        if (!allFoods.contains(_food)) {
+          setState(() {
+            _food = _foodService!.getRandomFood(_selectedCategory);
+          });
+        }
+      }
+    });
   }
 
   Future<void> _initData() async {

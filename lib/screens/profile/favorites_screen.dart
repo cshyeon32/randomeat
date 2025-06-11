@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:random_eat/models/food_item.dart';
@@ -10,6 +12,28 @@ class FavoritesScreen extends StatelessWidget {
       return await Hive.openBox<FoodItem>('foodBox');
     }
     return Hive.box<FoodItem>('foodBox');
+  }
+
+  Widget buildImage(String imagePath) {
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+      return Image.network(
+        imagePath,
+        height: 60,
+        width: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.image_not_supported),
+      );
+    } else {
+      return Image.file(
+        File(imagePath),
+        height: 60,
+        width: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.image_not_supported),
+      );
+    }
   }
 
   @override
@@ -52,14 +76,7 @@ class FavoritesScreen extends StatelessWidget {
                   contentPadding: const EdgeInsets.all(12),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      item.imageUrl,
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.image_not_supported),
-                    ),
+                    child: buildImage(item.imageUrl),
                   ),
                   title: Text(item.name),
                 ),

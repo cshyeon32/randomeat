@@ -1,7 +1,9 @@
-import 'package:random_eat/components/custom_tab_bar.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../models/food_item.dart';
+import 'package:random_eat/components/custom_tab_bar.dart';
+import 'package:random_eat/models/food_item.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({Key? key}) : super(key: key);
@@ -11,6 +13,28 @@ class ListScreen extends StatelessWidget {
       return await Hive.openBox<FoodItem>('foodBox');
     }
     return Hive.box<FoodItem>('foodBox');
+  }
+
+  Widget buildImage(String imagePath) {
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+      return Image.network(
+        imagePath,
+        height: 60,
+        width: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.image_not_supported),
+      );
+    } else {
+      return Image.file(
+        File(imagePath),
+        height: 60,
+        width: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.image_not_supported),
+      );
+    }
   }
 
   @override
@@ -47,8 +71,39 @@ class ListScreen extends StatelessWidget {
             itemCount: box.length,
             itemBuilder: (context, index) {
               final item = box.getAt(index);
-              return ListTile(
-                title: Text(item?.name ?? '이름 없음'),
+
+              if (item == null) return const SizedBox.shrink();
+
+              return Dismissible(
+                key: Key(item.key.toString()),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Icon(Icons.delete, color: Colors.white),
+                ),
+                onDismissed: (direction) async {
+                  await box.deleteAt(index);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('${item.name} 삭제됨')),
+                  );
+                },
+                child: Card(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(12),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: buildImage(item.imageUrl),
+                    ),
+                    title: Text(item.name),
+                  ),
+                ),
               );
             },
           );
