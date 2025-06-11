@@ -34,7 +34,6 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                // 프로필 이미지
                 CircleAvatar(
                   radius: 50,
                   backgroundImage: profileImagePath != null
@@ -43,15 +42,11 @@ class ProfileScreen extends StatelessWidget {
                           as ImageProvider,
                 ),
                 const SizedBox(height: 16),
-
-                // 이메일 표시
                 Text(
                   email,
                   style: const TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 const SizedBox(height: 24),
-
-                // 버튼들
                 ListTile(
                   leading: const Icon(Icons.favorite),
                   title: const Text('즐겨찾기'),
