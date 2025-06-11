@@ -52,10 +52,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _loadRandomFood() {
+  void _loadRandomFood() async {
+    final newFood = _foodService!.getRandomFood(_selectedCategory);
     setState(() {
-      _food = _foodService!.getRandomFood(_selectedCategory);
+      _food = newFood;
     });
+    await _foodService!.addRecentFood(newFood);
   }
 
   void _toggleFavorite() {
