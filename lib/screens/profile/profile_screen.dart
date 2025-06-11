@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:random_eat/components/custom_tab_bar.dart';
+import 'package:random_eat/screens/profile/favorites_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -51,6 +52,16 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 // 버튼들
+                ListTile(
+                  leading: const Icon(Icons.favorite),
+                  title: const Text('즐겨찾기'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => const FavoritesScreen()),
+                    );
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text('설정'),
