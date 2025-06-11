@@ -1,6 +1,6 @@
 import 'package:random_eat/components/login_text_field.dart';
 import 'package:random_eat/const/theme.dart';
-import 'package:random_eat/screens/home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +26,9 @@ class _AuthScreenState extends State<LoginScreen> {
       try {
         // Simulate login success
         await Future.delayed(Duration(seconds: 1));
+        // 이메일 저장
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_email', email);
       } on DioException catch (e) {
         message = e.response?.data['message'] ?? '알수 없는 오류가 발생했습니다.';
       } catch (e) {
