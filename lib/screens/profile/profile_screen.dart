@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:random_eat/components/custom_tab_bar.dart';
 import 'package:random_eat/screens/profile/favorites_screen.dart';
+import 'package:random_eat/screens/profile/recent_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -54,6 +55,16 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => const FavoritesScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.access_time),
+                  title: const Text('최근 기록'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => const RecentScreen()),
                     );
                   },
                 ),

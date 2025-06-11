@@ -35,4 +35,19 @@ class FoodService {
   List<FoodItem> getFavorites() {
     return _foodBox.values.where((item) => item.isFavorite).toList();
   }
+
+  Future<void> addRecentFood(FoodItem food) async {
+    final box = await Hive.openBox<FoodItem>('recentBox');
+    // 중복 제거
+    final existing = box.values.where((item) => item.name == food.name);
+    for (var item in existing) {
+      await box.delete(item.key);
+    }
+    await box.add(food);
+
+    // 최대 10개까지만 유지
+    if (box.length > 10) {
+      await box.deleteAt(0);
+    }
+  }
 }
