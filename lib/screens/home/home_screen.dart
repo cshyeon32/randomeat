@@ -17,37 +17,35 @@ class _HomeScreenState extends State<HomeScreen> {
   FoodService? _foodService;
   FoodItem? _food;
   String _selectedCategory = '전체';
-  List<String> _categories = [];
+  List<String> _categories = ['전체'];
 
   @override
   void initState() {
     super.initState();
+    _loadRandomFood();
     _initData();
-    Hive.box<FoodItem>('foodBox').listenable().addListener(() {
-      if (_foodService != null) {
-        final allFoods = Hive.box<FoodItem>('foodBox').values.toList();
-
-        if (!allFoods.contains(_food)) {
-          setState(() {
-            _food = _foodService!.getRandomFood(_selectedCategory);
-          });
-        }
-      }
-    });
   }
 
   Future<void> _initData() async {
     if (!Hive.isBoxOpen('foodBox')) {
       await Hive.openBox<FoodItem>('foodBox');
     }
+    if (!Hive.isBoxOpen('categoryBox')) {
+      await Hive.openBox<String>('categoryBox');
+    }
 
-    final box = Hive.box<FoodItem>('foodBox');
-    final service = FoodService(box);
-    final categories = service.getCategories();
+    final foodBox = Hive.box<FoodItem>('foodBox');
+    final service = FoodService(foodBox);
+
+    final categoryBox = Hive.box<String>('categoryBox');
+    final categories = categoryBox.values.toSet().toList();
+    categories.remove('전체');
+
+    final sorted = ['전체', ...categories];
 
     setState(() {
       _foodService = service;
-      _categories = categories;
+      _categories = sorted;
       _food = _foodService!.getRandomFood(_selectedCategory);
     });
   }
@@ -67,14 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildImage(String imagePath) {
+    final file = File(imagePath);
     if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-      // URL 이미지
       return Image.network(imagePath,
           height: 150, width: 150, fit: BoxFit.cover);
     } else {
-      // 로컬 파일 이미지
-      return Image.file(File(imagePath),
-          height: 150, width: 150, fit: BoxFit.cover);
+      return file.existsSync()
+          ? Image.file(file, height: 150, width: 150, fit: BoxFit.cover)
+          : const Text('이미지를 불러올 수 없습니다');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:random_eat/components/custom_tab_bar.dart';
+import 'package:random_eat/screens/category_manager_screen.dart';
 import 'package:random_eat/screens/profile/favorites_screen.dart';
 import 'package:random_eat/screens/profile/recent_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +66,17 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => const RecentScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.category),
+                  title: const Text('카테고리 관리'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CategoryManagerScreen(),
+                      ),
                     );
                   },
                 ),
