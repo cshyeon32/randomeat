@@ -17,14 +17,32 @@ class _AddScreenState extends State<AddScreen> {
   String _selectedCategory = '전체';
   File? _imageFile;
 
-  final List<String> _categories = [
-    '전체',
-    '한식',
-    '양식',
-    '중식',
-    '일식',
-    '기타',
-  ];
+  List<String> _categories = ['전체'];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCategories();
+  }
+
+  Future<void> _loadCategories() async {
+    final box = await Hive.openBox<String>('categoryBox');
+
+    if (box.isEmpty) {
+      await box.addAll(['한식', '양식', '중식', '일식', '기타']);
+    }
+
+    final values = box.values.toSet().toList();
+    values.remove('전체');
+
+    setState(() {
+      _categories = ['전체', ...values];
+
+      if (!_categories.contains(_selectedCategory)) {
+        _selectedCategory = _categories.first;
+      }
+    });
+  }
 
   Future<void> _pickImage() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -37,17 +55,10 @@ class _AddScreenState extends State<AddScreen> {
 
   Future<void> _saveFood() async {
     if (_nameController.text.isEmpty || _imageFile == null) return;
-    // if (_nameController.text.isEmpty || _imageFile == null || _selectedCategory == '전체') {
-    //   // 전체 선택 시 저장 않함
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('카테고리를 선택해주세요.')),
-    //   );
-    //   return;
-    // }
+
     final directory = await getApplicationDocumentsDirectory();
     final fileName = _imageFile!.path.split('/').last;
     final savedImage = await _imageFile!.copy('${directory.path}/$fileName');
-
     final foodBox = await Hive.openBox<FoodItem>('foodBox');
     final food = FoodItem(
       name: _nameController.text,
