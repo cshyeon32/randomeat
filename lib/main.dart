@@ -1,12 +1,12 @@
 import 'package:random_eat/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:random_eat/screens/category_manager_screen.dart';
+import 'package:random_eat/screens/profile/category_manager_screen.dart';
 import 'package:random_eat/screens/profile/favorites_screen.dart';
 import 'package:random_eat/screens/profile/profile_screen.dart';
 import 'models/food_item.dart';
-import 'package:random_eat/screens/list_screen.dart';
-import 'package:random_eat/screens/add_screen.dart';
+import 'package:random_eat/screens/food/list_screen.dart';
+import 'package:random_eat/screens/food/add_screen.dart';
 import 'package:random_eat/screens/home/home_screen.dart';
 
 void main() async {
