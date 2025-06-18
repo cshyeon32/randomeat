@@ -45,7 +45,6 @@ class FoodService {
     }
     await box.add(food);
 
-    // 최대 10개까지만 유지
     if (box.length > 10) {
       await box.deleteAt(0);
     }

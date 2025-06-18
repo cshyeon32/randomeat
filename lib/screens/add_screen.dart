@@ -67,7 +67,7 @@ class _AddScreenState extends State<AddScreen> {
     );
 
     await foodBox.add(food);
-    Navigator.pop(context); // 홈으로 돌아가기
+    Navigator.pop(context);
   }
 
   @override

@@ -59,16 +59,16 @@ class ProfileScreen extends StatelessWidget {
                     );
                   },
                 ),
-                ListTile(
-                  leading: const Icon(Icons.access_time),
-                  title: const Text('최근 기록'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => const RecentScreen()),
-                    );
-                  },
-                ),
+                // ListTile(
+                //   leading: const Icon(Icons.access_time),
+                //   title: const Text('최근 기록'),
+                //   onTap: () {
+                //     Navigator.of(context).push(
+                //       MaterialPageRoute(
+                //           builder: (context) => const RecentScreen()),
+                //     );
+                //   },
+                // ),
                 ListTile(
                   leading: const Icon(Icons.category),
                   title: const Text('카테고리 관리'),

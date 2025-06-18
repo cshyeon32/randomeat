@@ -152,7 +152,6 @@ class _AuthScreenState extends State<LoginScreen> {
     String? message;
     try {
       // TODO: Implement register logic here
-      // await provider.register(email: email, password: password);
     } on DioException catch (e) {
       message = e.response?.data['message'] ?? '알수 없는 오류가 발생 했습니다.';
     } finally {

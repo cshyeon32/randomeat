@@ -2,7 +2,6 @@ import 'package:hive/hive.dart';
 import 'package:random_eat/models/food_item.dart';
 
 Future<void> seedData(Box<FoodItem> box) async {
-// final box = Hive.box<FoodItem>('foods');
   if (box.isEmpty) {
     await box.addAll([
       //한식
