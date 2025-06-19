@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:random_eat/components/custom_tab_bar.dart';
-import 'package:random_eat/screens/category_manager_screen.dart';
+import 'package:random_eat/screens/profile/category_manager_screen.dart';
 import 'package:random_eat/screens/profile/favorites_screen.dart';
 import 'package:random_eat/screens/profile/recent_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

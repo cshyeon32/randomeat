@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:random_eat/screens/profile/profile_screen.dart';
 import 'package:random_eat/screens/home/home_screen.dart';
-import 'package:random_eat/screens/list_screen.dart';
+import 'package:random_eat/screens/food/list_screen.dart';
 
 class CustomBottomBar extends StatelessWidget {
   final int currentIndex;
